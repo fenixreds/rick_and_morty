@@ -4,8 +4,9 @@ import './App.css';
 import Nav from './components/Nav/Nav.jsx';
 import About from './components/About/About.jsx';
 import Detail from './components/Detail/Detail.jsx';
-import { useState } from 'react';
-import { Route,Routes } from 'react-router-dom';
+import LandingPage from './components/Landing/landing.jsx';
+import { useState,useEffect } from 'react';
+import { Route,Routes,useLocation,useNavigate } from 'react-router-dom';
 
 
 
@@ -13,6 +14,37 @@ import { Route,Routes } from 'react-router-dom';
 
 
 function App() {
+
+   
+   const location=useLocation();
+   console.log(location);
+
+       //LOGIN//
+       const navigate = useNavigate();
+       const [access, setAccess] = useState(false);
+       const EMAIL = 'ejemplo@gmail.com';
+       const PASSWORD = '1password';
+   
+       function login(userData) {
+         console.log(userData);
+       if (userData.password === PASSWORD &&
+          userData.email === EMAIL) {
+           setAccess(true);
+           navigate('/home');
+       }
+       }
+
+       //LOGOUT//
+       function logoutHandler(){
+         setAccess(false);
+         navigate("/");
+       }
+   
+       useEffect(() => {
+           !access && navigate('/');
+        }, [access]);
+
+
 
    const [characters, setCharacters]=useState([]);
 
@@ -41,15 +73,28 @@ function App() {
       
    }
    
+   
+   
 
    return (
       <div className="App">
-         <Nav onSearch={onSearch}/>
+
+         {
+            (location.pathname!=="/")&&
+            <Nav onSearch={onSearch}/>
+            
+          
+         }
+         
+            
+            
+         
          <Routes>
+            <Route exact path="/" element={<LandingPage login={login}/>}/>
             <Route path='/home' element={<Cards characters={characters} onClose={onClose}/>}/>
             <Route path='/about' element={<About/>}/>
             <Route path='/detail/:id' element={<Detail/>}/>
-
+            
          </Routes>        
             
       </div>
