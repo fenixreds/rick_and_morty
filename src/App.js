@@ -5,8 +5,10 @@ import Nav from './components/Nav/Nav.jsx';
 import About from './components/About/About.jsx';
 import Detail from './components/Detail/Detail.jsx';
 import LandingPage from './components/Landing/landing.jsx';
+import Error404 from './components/Error404/Error404.jsx';
 import { useState,useEffect } from 'react';
 import { Route,Routes,useLocation,useNavigate } from 'react-router-dom';
+import Favorites from './components/Favorites/favorites.jsx';
 
 
 
@@ -15,18 +17,77 @@ import { Route,Routes,useLocation,useNavigate } from 'react-router-dom';
 
 function App() {
 
-   
-   const location=useLocation();
-   console.log(location);
 
-       //LOGIN//
+   const location=useLocation();
+   
+   const [characters, setCharacters]=useState([]);
+
+   const onClose=(id) => {
+      //crea un nuevo arreglo sin el personaje id
+      const filteredState=characters.filter((char)=> char.id !== id);
+      setCharacters(filteredState);
+   }
+
+
+   const onSearch=(input) => {
+
+      let found=characters.find(
+         (character) =>character.id===Number(input));
+
+      if(!found){
+         fetch(`https://rickandmortyapi.com/api/character/${input}`)
+         .then((res)=>res.json())
+         .then(
+         (data) => {
+            if (data.name) {
+               setCharacters((oldChars) => [...oldChars, data]);
+            } 
+            else {
+               window.alert(`¡No hay personajes con este ID:${input}!`);
+            }
+         }
+         );
+
+      }else{
+         window.alert(`¡Ya agrego al personaje con este ID:${input}!`);
+      }
+      
+
+      
+   }
+
+   function randomHandler(){
+
+      let haveIt=[];
+      let random=(Math.random()*826).toFixed();
+      random=Number(random);
+
+      if(!haveIt.includes(random)){
+         haveIt.push(random);
+         fetch(`https://rickandmortyapi.com/api/character/${random}`)
+         .then((res)=>res.json())
+         .then(
+         (data) => {
+            if (data.name) {
+               setCharacters((oldChars) => [...oldChars, data]);
+            } 
+            else {
+               window.alert(`¡No hay personajes con este ID`);
+            }
+         }
+         );
+      }else{
+         window.alert("Todos los personajes fueron agregados");
+      }
+   }
+   
+    //LOGIN//
        const navigate = useNavigate();
        const [access, setAccess] = useState(false);
        const EMAIL = 'ejemplo@gmail.com';
        const PASSWORD = '1password';
    
        function login(userData) {
-         console.log(userData);
        if (userData.password === PASSWORD &&
           userData.email === EMAIL) {
            setAccess(true);
@@ -44,36 +105,6 @@ function App() {
            !access && navigate('/');
         }, [access]);
 
-
-
-   const [characters, setCharacters]=useState([]);
-
-   const onClose=(id) => {
-      //crea un nuevo arreglo sin el personaje id
-      const filteredState=characters.filter((char)=> char.id !== id);
-      setCharacters(filteredState);
-   }
-
-
-   const onSearch=(id) => {
-
-      fetch(`https://rickandmortyapi.com/api/character/${id}`)
-      .then((res)=>res.json())
-      .then(
-      (data) => {
-         if (data.name) {
-            setCharacters((oldChars) => [...oldChars, data]);
-         } 
-         else {
-            window.alert(`¡No hay personajes con este ID:${id}!`);
-         }
-      }
-      );
-
-      
-   }
-   
-   
    
 
    return (
@@ -81,12 +112,8 @@ function App() {
 
          {
             (location.pathname!=="/")&&
-            <Nav onSearch={onSearch}/>
-            
-          
+            <Nav onSearch={onSearch} logout={logoutHandler} random={randomHandler}/>          
          }
-         
-            
             
          
          <Routes>
@@ -94,6 +121,8 @@ function App() {
             <Route path='/home' element={<Cards characters={characters} onClose={onClose}/>}/>
             <Route path='/about' element={<About/>}/>
             <Route path='/detail/:id' element={<Detail/>}/>
+            <Route path='*' element={<Error404/>}/>
+            <Route path='/favs'element={<Favorites/>}/>
             
          </Routes>        
             
