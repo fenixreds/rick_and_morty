@@ -1,0 +1,26 @@
+.aboutContainer{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.textoContainer{
+    display: flex;
+    flex-direction: column;
+    margin: 40px;
+    padding: 20px;
+    background-color: brown;
+}
+
+.fotoContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.foto{
+    display: flex;
+    width: 30%;
+}

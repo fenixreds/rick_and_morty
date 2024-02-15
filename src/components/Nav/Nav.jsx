@@ -8,21 +8,21 @@ export default function Nav({onSearch, logout, random}){
         <div className={style.divNav}>
             
             
-            <div>
+            <div >
                 <Link to='/about'>
-                <button>About</button>
+                <button className={style.boton}>About</button>
                 </Link>   
             </div>
             
             <div>
                 <Link to='/home'>
-                <button>Home</button>
+                <button className={style.boton}>Home</button>
                 </Link>
             </div>
 
             <div>
                 <Link to='/favs'>
-                <button>Favoritos</button>
+                <button className={style.boton}>Favoritos</button>
                 </Link>
             </div>
 
@@ -31,11 +31,15 @@ export default function Nav({onSearch, logout, random}){
             </div>
 
             <div>
-                <button onClick={random}>Add Random</button>
+                <button 
+                className={style.boton}
+                onClick={random}>Add Random</button>
             </div>
             
             <div>
-                <button onClick={logout}>Log out</button>
+                <button 
+                className={style.boton}
+                onClick={logout}>Log out</button>
             </div>
             
 
