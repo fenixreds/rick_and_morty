@@ -4,6 +4,7 @@ export const FILTER="FILTER"
 export const SORT="SORT"
 export const RESET="RESET"
 
+
 export function addFavorite(character){
     return{
         type: "ADD_FAVORITE",
@@ -38,3 +39,4 @@ export function reset(){
         
     }
 }
+

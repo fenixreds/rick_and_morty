@@ -17,10 +17,12 @@ function Card({character, onClose ,addFavorite,removeFavorite,favorites}) {
    },[]);
 
    useEffect(() => {
+
       favorites.forEach((fav) => {
          if (fav.id === character.id) {
             setIsFav(true);
          }
+         
       });
    }, [favorites]);
 

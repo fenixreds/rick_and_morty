@@ -9,6 +9,8 @@ import Error404 from './components/Error404/Error404.jsx';
 import { useState,useEffect } from 'react';
 import { Route,Routes,useLocation,useNavigate } from 'react-router-dom';
 import Favorites from './components/Favorites/favorites.jsx';
+import { useSelector ,useDispatch} from 'react-redux';
+import { removeFavorite } from './redux/actions.js';
 
 
 
@@ -19,12 +21,15 @@ function App() {
 
 
    const location=useLocation();
+   const favorites=useSelector(state=>state.favorites);
+   const dispatch=useDispatch();
    
    const [characters, setCharacters]=useState([]);
 
    const onClose=(id) => {
       //crea un nuevo arreglo sin el personaje id
       const filteredState=characters.filter((char)=> char.id !== id);
+      dispatch(removeFavorite(id));
       setCharacters(filteredState);
    }
 
