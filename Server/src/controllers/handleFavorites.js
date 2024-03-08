@@ -1,0 +1,23 @@
+let myFavorites=[]
+
+const postFavorite=(req, res)=>{
+    const character=req.body;
+    if(character){
+        myFavorites.push(character);
+        return res.status(200).json(myFavorites);
+    }
+    
+}
+
+const deleteFavorite=(req,res)=>{
+    const{id}=req.params;
+    const filteredFav = myFavorites.filter(char=>char.id !==Number(id)); 
+    return res.json(filteredFav);
+    
+}
+
+const getFavorite=(req,res)=>{
+    return res.status(200).json(myFavorites);
+}
+
+module.exports={postFavorite,deleteFavorite,getFavorite};
