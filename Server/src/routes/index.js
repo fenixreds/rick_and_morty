@@ -1,11 +1,12 @@
 const express=require("express");
-const router=express.Router();
+
 
 const {getCharById}=require('../controllers/getCharById');
 const {login}=require('../controllers/login');
 const {postFavorite,deleteFavorite,getFavorite}=require('../controllers/handleFavorites');
 
 
+const router=express.Router();
 
 
 router.get("/character/:id",getCharById);

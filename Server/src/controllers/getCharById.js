@@ -2,31 +2,31 @@ const axios=require('axios');
 const url='https://rickandmortyapi.com/api/character';
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
-const getCharById=(req,res)=>{
+const getCharById=async (req,res)=>{
     
     //logica para sacar el ID de req
     const {id}=req.params;
 
     
     try{
-        axios.get(`${url}/${id}`)
-        .then((response)=>response.data)
-        .then((data)=>{
+        const result =await axios.get(`${url}/${id}`)
+        const charApi=result.data;
+        
             const character={
-                id:data.id,
-                image:data.image,
-                name:data.name,
-                gender:data.gender,
-                species:data.species
+                id:charApi.id,
+                image:charApi.image,
+                name:charApi.name,
+                gender:charApi.gender,
+                species:charApi.species
             }
-            if(data.name){
+            if(charApi.name){
                 return res.status(200).json(character);
             }
             else{
                 return res.status(404).json();
             }
-            })
-    }
+        }
+    
     
         
     

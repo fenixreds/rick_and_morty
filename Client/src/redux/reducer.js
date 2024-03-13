@@ -1,17 +1,44 @@
-import {ADD_FAVORITE, REMOVE_FAVORITE,GET_FAVORITES,FILTER,RESET, SORT} from "./actions"
+import {
+    ADD_CHARACTER,
+    REMOVED_CHARACTER, 
+    ADD_FAVORITE, 
+    REMOVE_FAVORITE,
+    GET_FAVORITES,
+    FILTER,
+    RESET, 
+    SORT} from "./actions"
 
 
-const initialState={favorites:[], allcharacters:[]}
+const initialState={favorites:[], allcharacters:[],filteredCharacters:[]}
 
 function rootReducer(state=initialState,action){
+
+
     switch(action.type){
+
+
+        case ADD_CHARACTER:
+            return{
+                ...state,
+                allcharacters: [...state.allcharacters, action.payload]
+                
+            }
+
+        case REMOVED_CHARACTER:
+           
+            
+            return{
+                ...state,
+                allcharacters: state.allcharacters.filter((char)=>char.id !== action.payload)
+                
+            }
 
         case ADD_FAVORITE:
             
             return{
                 ...state,
                 favorites:action.payload,
-                allcharacters:action.payload
+                filteredCharacters:action.payload
             }
 
         case REMOVE_FAVORITE:
@@ -19,7 +46,7 @@ function rootReducer(state=initialState,action){
             return{
                 ...state,
                 favorites: action.payload,
-                allcharacters:action.payload
+                filteredCharacters:action.payload
                 
             }
         
@@ -28,7 +55,7 @@ function rootReducer(state=initialState,action){
             return{
                 ...state,
                 favorites: action.payload,
-                allcharacters:action.payload
+                filteredCharacters:action.payload
                 
             }    
 
@@ -38,7 +65,7 @@ function rootReducer(state=initialState,action){
         case FILTER:
             return{
                 ...state,
-                favorites: state.allcharacters.filter(
+                favorites: state.filteredCharacters.filter(
                     (character)=>character.gender===action.payload
                 ),
             }   
@@ -60,7 +87,7 @@ function rootReducer(state=initialState,action){
         case RESET:
                 return{
                     ...state,
-                    favorites: state.allcharacters,
+                    favorites: state.filteredCharacters,
                 }       
 
         default:

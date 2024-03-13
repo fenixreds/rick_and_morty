@@ -5,13 +5,15 @@ export default function Cards({characters, onClose}) {
    
    return <div className={style.divCards}>
          {
-         characters.map((character)=>
-            <Card
-             character={character}
-             onClose={onClose}
-              />
-
-         )
+            characters.map(({id, name, species, gender, image}) => <Card 
+            id={id}
+            key={id}
+            name={name}
+            species={species}
+            gender={gender}
+            image={image}
+            onClose={onClose}
+         />)
          }   
          
          </div>

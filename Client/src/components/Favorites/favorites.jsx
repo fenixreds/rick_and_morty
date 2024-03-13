@@ -28,8 +28,8 @@ export default function Favorites(){
             <div className={style.controlesContainer}>
                 <select className={style.control}
                 placeholder="Order" onChange={handleSort}> 
-                    <option value="Ascendente">Ascendente</option>
-                    <option value="Descendente">Descendente</option>
+                    <option  value="Ascendente">Ascendente</option>
+                    <option  value="Descendente">Descendente</option>
                 </select>
 
                 <select className={style.control} 

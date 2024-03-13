@@ -1,11 +1,28 @@
 import axios from "axios";
 
 export const ADD_FAVORITE="ADD_FAVORITE"
+export const ADD_CHARACTER = 'ADD_CHARACTER'
 export const REMOVE_FAVORITE="REMOVE_FAVORITE"
+export const REMOVED_CHARACTER = 'REMOVED_CHARACTER';
 export const FILTER="FILTER"
 export const SORT="SORT"
 export const RESET="RESET"
 export const GET_FAVORITES="GET_FAVORITES"
+
+
+export function addChar(char){
+   return{
+       type: ADD_CHARACTER,
+       payload:char
+   }
+}
+
+export function removedChar(id){
+   return{
+       type: REMOVED_CHARACTER,
+       payload:id
+   }
+}
 
 export const getFavorites=()=>{
     const endpoint = 'http://localhost:3001/rickandmorty/fav/';
@@ -23,27 +40,36 @@ export const getFavorites=()=>{
 
 export const addFavorite = (character) => {
     const endpoint = 'http://localhost:3001/rickandmorty/fav';
-    return (dispatch) => {
-       axios.post(endpoint, character)
-       .then(({ data }) => {
-          return dispatch({
-             type: 'ADD_FAVORITE',
-             payload: data,
-          });
-       });
+    return async (dispatch) => {
+      try {
+         const response=await axios.post(endpoint, character)
+         return dispatch({
+            type: 'ADD_FAVORITE',
+            payload: response.data,
+         });
+
+      } catch (error) {
+         console.log(error.message);
+      }
+
+       
+       
     };
  };
 
  export const removeFavorite = (id) => {
     const endpoint = 'http://localhost:3001/rickandmorty/fav/' + id;
-    return (dispatch) => {
-       axios.delete(endpoint)
-       .then(({ data }) => {
-          return dispatch({
-             type: 'REMOVE_FAVORITE',
-             payload: data,
-       });
-       });
+    return async (dispatch) => {
+      try {
+         const response=await axios.delete(endpoint)
+         return dispatch({
+            type: 'REMOVE_FAVORITE',
+            payload: response.data,
+      });
+
+      } catch (error) {
+         console.log(error.message);
+      }
     };
  };
 
