@@ -8,7 +8,7 @@ const Detail = () =>{
 
     useEffect(() => {
         
-        axios(`http://localhost:3001/rickandmorty/detail/${id}`)
+        axios(`https://rickandmortyapi.com/api/character/${id}`)
         .then(
            ({ data }) => {
               if (data.name) {
