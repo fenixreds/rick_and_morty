@@ -7,7 +7,7 @@ const Detail = () =>{
     const{id}=useParams()//AQUI DECONSTRUYE EL OBJETO PARA USAR SOLO ID//
 
     useEffect(() => {
-        //axios(`https://rickandmortyapi.com/api/character/${id}`)
+        
         axios(`http://localhost:3001/rickandmorty/detail/${id}`)
         .then(
            ({ data }) => {

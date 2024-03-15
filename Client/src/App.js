@@ -28,29 +28,40 @@ function App() {
    const navigate = useNavigate();
    const location=useLocation();
    
-   //dispatch(getFavorites);
+  
 
    const onClose=(id) => {
-      //crea un nuevo arreglo sin el personaje id
+      
       dispatch(removedChar(id));
-      //dispatch(removeFavorite(id));
+      dispatch(removeFavorite(id));
       
    }
 
 
    const onSearch=async (input) => {
 
-      try {
-         const response=await axios(`http://localhost:3001/rickandmorty/character/${input}`)
-         if(response.data.name){
-            dispatch(addChar(response.data));
-         }else{
+      const found=allCharacters.find(
+         (character)=>character.id===Number(input));
+
+      if(!found){
+         try {
+            const response=await axios(`http://localhost:3001/rickandmorty/character/${input}`)
+            if(response.data.name){
+               dispatch(addChar(response.data));
+            }else{
+               window.alert(`No hay personajes con este ID: ${input}!`);
+            }
+            
+         } catch (error) {
+            console.log(error.message);
             window.alert(`No hay personajes con este ID: ${input}!`);
          }
-         
-      } catch (error) {
-         console.log(error.message);
-      }
+
+      }else{
+         window.alert(`¡Ya agrego al personaje con este ID:${input}!`);
+      } 
+
+      
 
       
       
@@ -60,7 +71,30 @@ function App() {
 
 
 
-   function randomHandler(){
+   const randomHandler=async ()=>{
+
+      let haveIt=[];
+      let random=(Math.random()*826).toFixed();
+      random=Number(random);
+
+      if(!haveIt.includes(random)){
+         haveIt.push(random);
+
+         try {
+            const response=await axios(`http://localhost:3001/rickandmorty/character/${random}`)
+            if(response.data.name){
+               dispatch(addChar(response.data));
+            }else{
+               window.alert(`No hay personajes con este ID: ${random}!`);
+            }
+            
+         } catch (error) {
+            console.log(error.message);
+            window.alert(`No hay personajes con este ID: ${random}!`);
+         }
+      }else{
+         window.alert("Todos los personajes fueron agregados");
+      }
 
       
    }

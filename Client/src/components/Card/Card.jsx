@@ -6,6 +6,7 @@ import { useState,useEffect } from "react";
 
 export default function Card({ id, name, status, species, gender, origin, image, onClose }) {
    const [isFav, setIsFav] = useState(false);
+   const [closeBtn,setCloseBtn]=useState(true);
 
    const dispatch = useDispatch();
    const favorites =  useSelector((state)=>state.favorites);
@@ -17,6 +18,13 @@ export default function Card({ id, name, status, species, gender, origin, image,
       id: id,
       image: image,
    }
+
+
+   useEffect(()=>{
+      if(!onClose){
+         setCloseBtn(false)
+      }
+   },[]);
 
    useEffect(() => {
       favorites.forEach((fav) => {
@@ -59,9 +67,14 @@ export default function Card({ id, name, status, species, gender, origin, image,
             )
          }
 
-         <button className={style.closeButton} 
-         onClick={()=>(onClose(id))}>X</button>
-         
+         {
+            closeBtn?(
+               <button className={style.closeButton} 
+               onClick={()=>(onClose(id))}>X</button>
+
+            ):null
+
+         }
          
 
 
