@@ -7,9 +7,6 @@ describe('Test de RUTAS', ()=>{
 
     describe('GET /rickandmorty/character/:id', ()=>{
         it('Responde con status: 200', async ()=>{
-            const {body}=await agent.get('/rickandmorty/character/1').trustLocalhost();
-
-            console.log(body);
             await agent.get('/rickandmorty/character/1').expect(200);
         });
 
@@ -25,7 +22,7 @@ describe('Test de RUTAS', ()=>{
 
     describe('GET /rickandmorty/login', ()=>{
         it('Con el login correcto debe retornar access:true', async ()=>{
-            let { body } = await agent.get('/rickandmorty/login?email=batman@gmail.com&password=robin1234');
+            let { body } = await agent.get('/rickandmorty/login?email=ejemplo@gmail.com&password=1password');
             expect(body.access).toBeTruthy();
         });
         it('Con el login incorrecto debe retornar access:false', async ()=>{
