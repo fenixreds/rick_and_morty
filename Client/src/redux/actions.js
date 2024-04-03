@@ -25,7 +25,7 @@ export function removedChar(id){
 }
 
 export const getFavorites=()=>{
-    const endpoint = 'http://localhost:3001/rickandmorty/fav/';
+    const endpoint = 'http://localhost:3001/rickandmorty/favs/';
     return (dispatch) => {
        axios.get(endpoint)
        .then(({ data }) => {
@@ -40,6 +40,8 @@ export const getFavorites=()=>{
 
 export const addFavorite = (character) => {
     const endpoint = 'http://localhost:3001/rickandmorty/fav';
+   
+    
     return async (dispatch) => {
       try {
          const response=await axios.post(endpoint, character)

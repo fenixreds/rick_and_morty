@@ -1,6 +1,6 @@
 const axios=require('axios');
 const url='https://rickandmortyapi.com/api/character';
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+//process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 const getCharById=async (req,res)=>{
     
@@ -14,10 +14,15 @@ const getCharById=async (req,res)=>{
         
             const character={
                 id:charApi.id,
-                image:charApi.image,
                 name:charApi.name,
+                status:charApi.status,
+                species:charApi.species,
                 gender:charApi.gender,
-                species:charApi.species
+                origin:charApi.origin,
+                image:charApi.image
+                
+                
+                
             }
             if(charApi.name){
                 return res.status(200).json(character);

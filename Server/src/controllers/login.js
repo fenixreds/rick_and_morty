@@ -1,24 +1,36 @@
-const users=require('../utils/users');
+const {User}=require("../DB_connection");
 
-const login=(req,res)=>{
-    const {email, password}=req.query;
-    ////////////////////////////////////////////
-    // let access=false;
+const login=async(req,res)=>{
 
-    // users.forEach((user)=>{
-    //     if(user.email===email&&user.password===password)
-    //     access=true;
-    // })
-    // return res.status(200).json({access})
+    const {email,password}=req.query;
 
-    //////////////////////////////////
-    const foundUser=users.find(user=>user.email===email);
-    
-    if(foundUser){
-        if(foundUser.password===password) return res.send({access:true});
-        else return res.send({access:false});
-    } else res.send({access:false});
-    //////////////////////////////////////
+    if(!email|!password){
+        res.status(400).json("Faltan datos");
+    }
+    else{
+        try {
+            const userQuery=await User.findOne(
+                {where:{email:email}}
+            );
+            if(!userQuery){
+                res.status(404).json("Usuario no encontrado");
+            }
+            else{
+                if(userQuery.password===password){
+                    res.status(200).json({access:true});
+                    return userQuery;
+                }
+                else{
+                    res.status(403).json("Contraseña incorrecta");
+                }
+                
+                
+            }
+        } catch (error) {
+            res.status(500).json(console.log(error));
+        }
+    }
+
 }
 
-module.exports={login};
+module.exports=login;

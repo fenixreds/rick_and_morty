@@ -11,11 +11,14 @@ export default function Card({ id, name, status, species, gender, origin, image,
    const dispatch = useDispatch();
    const favorites =  useSelector((state)=>state.favorites);
 
+   
    const myChar = {
-      name: name,
-      gender: gender,
-      species: species,
       id: id,
+      name: name,
+      status:status,
+      species: species,
+      gender: gender,
+      origin:origin?.name,
       image: image,
    }
 
