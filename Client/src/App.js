@@ -6,6 +6,7 @@ import About from './components/About/About.jsx';
 import Detail from './components/Detail/Detail.jsx';
 import LandingPage from './components/Landing/landing.jsx';
 import Error404 from './components/Error404/Error404.jsx';
+import Register from './components/Register/Register.jsx';
 import { useState,useEffect } from 'react';
 import { Route,Routes,useLocation,useNavigate} from 'react-router-dom';
 import Favorites from './components/Favorites/favorites.jsx';
@@ -102,6 +103,7 @@ function App() {
 
 
     //LOGIN//
+    
     const [access, setAccess] = useState(false);
 
     async function login(userData) {
@@ -128,9 +130,37 @@ function App() {
          navigate("/");
        }
    
-       useEffect(() => {
-           !access && navigate('/');
-        }, [access]);
+   //REGISTER//
+   async function register(userData) {
+
+      try {
+         const { email, password } = userData;
+         const URL = 'http://localhost:3001/rickandmorty/login/';
+         const result=await axios.post(URL ,userData);
+         console.log(userData);
+         console.log(result);
+         if(result.status===200){
+            window.alert("Su cuenta fue creada exitosamente");
+            navigate("/")
+         }
+         else{
+            window.alert("La cuenta ya existe o faltan datos");
+            
+         }
+         
+      } catch (error) {
+         console.log(error.message);
+         window.alert("La cuenta ya existe o faltan datos");
+      }
+
+      
+   }
+   
+
+   //VALIDA SI HAY UN CAMBIO EN access Y SI NO ES TRUE TE ENVIA AL LOGIN    
+   useEffect(() => {
+       !access && navigate('/');
+   }, [access]);
 
    
 
@@ -138,7 +168,7 @@ function App() {
       <div className="App">
 
          {
-            (location.pathname!=="/")&&
+            ((location.pathname!=="/")&&(location.pathname!=='/Register'))&&
             <Nav onSearch={onSearch} logout={logoutHandler} random={randomHandler}/>          
          }
             
@@ -150,6 +180,7 @@ function App() {
             <Route path='/detail/:id' element={<Detail/>}/>
             <Route path='*' element={<Error404/>}/>
             <Route path='/favs'element={<Favorites/>}/>
+            <Route path='/register' element={<Register register={register}/>}/>
             
          </Routes>        
             

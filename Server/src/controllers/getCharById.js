@@ -1,6 +1,6 @@
 const axios=require('axios');
 const url='https://rickandmortyapi.com/api/character';
-//process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 const getCharById=async (req,res)=>{
     

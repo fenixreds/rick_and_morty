@@ -40,7 +40,7 @@ export const getFavorites=()=>{
 
 export const addFavorite = (character) => {
     const endpoint = 'http://localhost:3001/rickandmorty/fav';
-   
+   console.log(character);
     
     return async (dispatch) => {
       try {

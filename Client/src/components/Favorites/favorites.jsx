@@ -35,7 +35,7 @@ export default function Favorites(){
                 <select className={style.control} 
                 placeholder="Gender" onChange={handleFilter}>
                     {["Male","Female","unknown","Genderless"].map((gender)=>(
-                        <option value={gender}>{gender}</option>
+                        <option key={gender} value={gender}>{gender}</option>
                     ))}   
                 </select>
 

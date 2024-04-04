@@ -1,13 +1,11 @@
 import { useState } from "react";
-import style from "./Form.module.css"
+import style from "./Register.module.css"
 import validate from "../Validations/validation";
-import { Link } from "react-router-dom";
 
 
 
 
-
-const Form=({login})=>{
+const Register=({register})=>{
 
     const [user,setUser]=useState({
         email:"",
@@ -41,7 +39,7 @@ const Form=({login})=>{
     
     const handleSubmit=(e)=>{
         e.preventDefault();
-        login(user);
+        register(user);
     }
 
 
@@ -52,7 +50,7 @@ const Form=({login})=>{
     return(
         <div className={style.formContainer}>
             <div className={style.formTitle}>
-                <h1>Ingrese Credenciales</h1>
+                <h1>Ingrese los siguientes datos</h1>
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -73,20 +71,14 @@ const Form=({login})=>{
                     {errors.password? <span>{errors.password}</span>: null}
                 </div>
                 <button className={style.submitButton}
-                >Login</button>
+                >Registrarse</button>
 
-                <div>
-                    <h1>¿Usuario nuevo?</h1>
-                    <Link to='/Register'>
-                        <h2>Registrese aqui</h2>
-                     </Link>
-                </div>
+                
             </form>
 
         </div>
 
     );
+};
 
-}
-
-export default Form;
+export default Register;
